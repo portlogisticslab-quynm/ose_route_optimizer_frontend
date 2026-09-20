@@ -23,3 +23,11 @@
 .modal-error{margin-top:12px;padding:10px 12px;border-left:4px solid #d97706;background:#fff7ed;color:#9a3412;border-radius:6px;font-size:12px;line-height:1.4}
 button:disabled{opacity:.6;cursor:not-allowed}
 .small-btn.reverse-lite{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe}.small-btn.reverse-lite:hover{background:#dbeafe}
+.app-footer{
+  text-align:center;
+  padding:6px 10px 8px;
+  color:#64748b;
+  font-size:6px;
+  border-top:1px solid #e2e8f0;
+  background:#fff;
+}
