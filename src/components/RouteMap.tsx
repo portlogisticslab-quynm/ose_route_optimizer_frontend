@@ -1,0 +1,6 @@
+import {useEffect,useRef} from 'react';import L from 'leaflet';import 'leaflet/dist/leaflet.css';import type {Location} from '../types'
+export default function RouteMap({path,locations}:{path:string[];locations:Location[]}){const el=useRef<HTMLDivElement>(null);const mapRef=useRef<L.Map|null>(null);const layerRef=useRef<L.LayerGroup|null>(null)
+ useEffect(()=>{if(!el.current||mapRef.current)return;const map=L.map(el.current).setView([20,105],4);L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{attribution:'Tiles © Esri'}).addTo(map);mapRef.current=map;layerRef.current=L.layerGroup().addTo(map);setTimeout(()=>map.invalidateSize(),100)},[])
+ useEffect(()=>{const map=mapRef.current,grp=layerRef.current;if(!map||!grp)return;grp.clearLayers();const pts=path.map(id=>locations.find(x=>x.id===id)).filter(Boolean) as Location[];if(!pts.length)return;const ll=pts.map(x=>L.latLng(x.lat,x.lng));L.polyline(ll,{dashArray:'8 8',weight:4}).addTo(grp);pts.forEach((p,i)=>L.circleMarker([p.lat,p.lng],{radius:8}).bindTooltip(`${i+1}. ${p.code} — ${p.name}`).addTo(grp));map.fitBounds(L.latLngBounds(ll).pad(.15))},[path,locations])
+ return <div className="route-map" ref={el}/>
+}
